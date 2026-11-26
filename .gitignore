@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.coverage
+venv/
+.DS_Store
+handoff-output/
+
+zeta.png
+prime-steps.png
+prime-estimates.png
