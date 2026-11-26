@@ -3,27 +3,45 @@ import matplotlib.pyplot as plt
 
 ESTIMATE_COLORS = {4: "#0072b2", 16: "#cb5012", 64: "#007a59", 256: "#875097"}
 
-
+# Where post tells matplotlib to maintain current y value until it reaches the next x value
 def plot_prime_count(ax, numbers, counts):
     """Draw the running count, with a jump at each prime."""
-    pass
+    ax.step(numbers, counts, where="post", label="Prime count")
+    ax.set_xticks(numbers)
+    ax.set(xlabel='Number', ylabel='Number of Primes', title='How many primes have we passed')
 
 
 def plot_outputs(ax, values):
     """Trace the complex outputs in order and mark the origin."""
-    pass
+    real = []
+    imag = []
+    for w in values:
+        real += [w.real]
+        imag += [w.imag]
+    ax.plot(real, imag)
+    ax.set(xlabel='Real part of output', ylabel='Imaginary part of output', title='Where the output reaches zero')
+    ax.scatter(0, 0, marker='x')
+    ax.set_aspect("equal")
+
+
 
 
 def plot_inputs(ax, heights):
     """Mark the inputs that send the curve through the origin."""
-    pass
+    ax.axvline (x=0.5)
+    for height in heights:
+        ax.scatter(0.5, height, marker='o')
+    ax.set(xlabel='Real part of input', ylabel='Imaginary part of input', title='Inputs that give zero')
+
 
 
 def plot_estimates(axes, numbers, counts, x, estimates):
     """Compare the staircase with one estimate per panel."""
-    pass
-
-
+    for ax, n in zip(axes, estimates):
+        plot_prime_count(ax, numbers, counts)
+        draw_estimate(ax, x, estimates[n], n)
+        ax.set(title=f"Using {n} zeros")
+        
 def draw_estimate(ax, x, y, n):
     """Draw an estimate in its legend color. Supplied with the starter."""
     ax.plot(x, y, color=ESTIMATE_COLORS[n], linestyle="--", label=f"{n} zeros")
